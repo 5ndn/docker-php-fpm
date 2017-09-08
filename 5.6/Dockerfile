@@ -4,7 +4,6 @@ RUN apt-get update && apt-get install -y \
         git \
         libmemcached-dev \
         libmemcached11 \
-        zlib1g-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
@@ -23,7 +22,8 @@ RUN apt-get update && apt-get install -y \
     && yes '' | pecl install memcache \
     && docker-php-ext-enable memcache
 
-RUN apt-get update && apt-get install -y libssl-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libssl-dev zlib1g-dev && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install zip 
 
 RUN pecl install mongo-1.6.14 \
     && docker-php-ext-enable mongo
